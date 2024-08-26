@@ -35,7 +35,7 @@ public class ContactService {
     }
 
     public Contact getContact(String id){
-        return contactRepo.findbyId(id).orElseThrow(() -> new RuntimeException("Contact not found"));
+        return contactRepo.findById(id).orElseThrow(() -> new RuntimeException("Contact not found"));
     }
 
     public Contact createContact(Contact contact) {
@@ -47,6 +47,7 @@ public class ContactService {
     }
 
     public String uploadPhoto(String id, MultipartFile file) {
+        log.info("Saving picture for user ID: {}", id);
         Contact contact = getContact(id);
         String photoUrl = photoFunction.apply(id, file);
         contact.setPhotoUrl(photoUrl);
